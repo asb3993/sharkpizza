@@ -4,7 +4,7 @@ connect = require 'connect'
 module.exports = app = require('express')()
 
 app.configure ->
-    @use connect.logger 'short'
+    @use connect.static "#{__dirname}/static"
 
 app.get '/hello', (req, res, next) ->
     res.writeHead 200, 'OK'
