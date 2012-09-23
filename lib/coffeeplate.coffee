@@ -4,20 +4,20 @@
 fs = require 'fs'
 CoffeeScript = require 'coffee-script'
 
- # template cache (used unless noCache option is set)
- # for performance, we don't bother stat'ing the file
- # cache['templateName'] = function(parameters) { ... }
- cache = {}
+# template cache (used unless noCache option is set)
+# for performance, we don't bother stat'ing the file
+# cache['templateName'] = function(parameters) { ... }
+cache = {}
 
 module.exports = (options) ->
-	{noCache} = options
+	{noCache} = options if options
 
 	run: (templateFile, params, cb) ->
 		fn = cache[templateFile]
 		if noCache or not fn
 			fs.readFile templateFile, 'utf8', (err, template) ->
 				return cb err if err
-				code = "with(params) return " + CoffeeScript.compile("\"\"\"\n#{template}\n\"\"\"", bare: on)
+				code = "with(params) return " + CoffeeScript.compile("\"\"\"\n#{template}\n\"\"\"", bare: on).replace "\n", ""
 				fn = new Function "params", code
 				cache[templateFile] = fn if not noCache
 				cb null, fn params

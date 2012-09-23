@@ -1,10 +1,12 @@
 connect = require 'connect'
-showdown = require 'showdown'
+showdown = new (require('showdown').converter)()
 fs = require 'fs'
+coffeeplate = require('./lib/coffeeplate')()
+
 module.exports = app = require('express')()
-converter = new showdown.converter()
 
 config =
+    template_path:"#{__dirname}/templates"
     static_path:"#{__dirname}/static"
     entry_path:"#{__dirname}/entries"
 
@@ -26,10 +28,14 @@ app.get '/', (req, res, next) ->
         console.log files
 
 app.get '/blog/:id/*', (req, res, next) ->
-    res.writeHead 200, 'OK'
     entry = entries[req.params.id]
     fs.readFile "#{config.entry_path}/#{entry.content}", "UTF8", (err, md) ->
-       return next err if err
-       res.write converter.makeHtml md
-       res.end()
+        return next err if err
+        params =
+            page_title: "Hello world!"
+            page_body: showdown.makeHtml md
+        coffeeplate.run "#{config.template_path}/template.html", params, (err, html) ->
+            res.writeHead 200, 'OK'
+            res.write html
+            res.end()
  
