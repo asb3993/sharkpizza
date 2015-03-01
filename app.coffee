@@ -1,7 +1,7 @@
 connect = require 'connect'
 showdown = new (require('showdown').converter)()
 fs = require 'fs'
-coffeeplate = require('./lib/coffeeplate')()
+coffeeplate = require('./lib/coffeeplate')(noCache: true)
 
 module.exports = app = require('express')()
 
@@ -32,7 +32,7 @@ app.get '/blog/:id/*', (req, res, next) ->
     fs.readFile "#{config.entry_path}/#{entry.content}", "UTF8", (err, md) ->
         return next err if err
         params =
-            page_title: "Hello world!"
+            page_title: "Timeyoutakeit"
             page_body: showdown.makeHtml md
         coffeeplate.run "#{config.template_path}/template.html", params, (err, html) ->
             res.writeHead 200, 'OK'
