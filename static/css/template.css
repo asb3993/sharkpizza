@@ -3,20 +3,33 @@ body {
     padding: 2em 2em 4em;
     max-width: 800px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5em;
-    color: #545454;
+    color: rgba(74,73,74,0.85);
     background-color: #FF00FF;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.06);
 }
 
 h1 {
-    color: blue;
+    font-family: ArialMT;
+    font-size: 48px;
+    color: #4A4A4A;
+    line-height: 55px;
     text-align: center;
 }
 
 h2 {
-    
+    font-family: ArialMT;
+    font-size: 36px;
+    color: #47C0DD;
+    line-height: 42px;
+}
+
+h3 {
+    font-family: AvenirNext-Bold;
+    font-size: 24px;
+    color: #47C0DD;
+    line-height: 33px;
 }
 
 p {
