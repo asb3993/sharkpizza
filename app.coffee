@@ -32,9 +32,9 @@ app.get '/blog/:id/*', (req, res, next) ->
     fs.readFile "#{config.entry_path}/#{entry.content}", "UTF8", (err, md) ->
         return next err if err
         params =
-            page_title: "Timeyoutakeit"
+            page_title: "timeyoutakeit"
             page_body: showdown.makeHtml md
-        coffeeplate.run "#{config.template_path}/template.html", params, (err, html) ->
+        coffeeplate.run "#{config.template_path}/blogTemplate.html", params, (err, html) ->
             res.writeHead 200, 'OK'
             res.write html
             res.end()
